@@ -4,7 +4,7 @@ class Instrutores {
 
   Instrutores({
     this.idInstrutores,
-    required this.nomeInstrutor,
+    required this.nomeInstrutor, required String nome,
   });
 
   Map<String, dynamic> toMap() {
