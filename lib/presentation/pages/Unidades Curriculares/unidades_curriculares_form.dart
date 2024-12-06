@@ -1,18 +1,42 @@
+import 'package:cronograma/data/models/cursos_model.dart';
+import 'package:cronograma/data/repositories/cursos_repository.dart';
+import 'package:cronograma/presentation/viewmodels/cursos_viewmodels.dart';
 import 'package:flutter/material.dart';
 
-class CadastroInstrutorPage extends StatelessWidget {
+class CadastroUnidadesCurricularesPage extends StatefulWidget {
+  const CadastroUnidadesCurricularesPage({super.key});
+
+  @override
+  State<CadastroUnidadesCurricularesPage> createState() => _CadastroUnidadesCurricularesPageState();
+}
+
+class _CadastroUnidadesCurricularesPageState extends State<CadastroUnidadesCurricularesPage> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nomeController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _telefoneController = TextEditingController();
+  final TextEditingController _cargaHorariaController = TextEditingController();
 
-  CadastroInstrutorPage({super.key});
+  CursosViewModel cursosViewModel = CursosViewModel(CursosRepository());
+  List<Cursos> cursos = [];
+  Cursos? cursoSelecionado;
+
+  @override
+  void initState() {
+    super.initState();
+    _carregarCursos();
+  }
+
+  Future<void> _carregarCursos() async {
+    List<Cursos> listaCursos = await cursosViewModel.getCursos();
+    setState(() {
+      cursos = listaCursos;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Cadastro de Instrutor'),
+        title: const Text('Cadastro de Unidade Curricular'),
         backgroundColor: Colors.teal,
       ),
       body: Padding(
@@ -23,7 +47,7 @@ class CadastroInstrutorPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
-                'Preencha os dados do Instrutor',
+                'Preencha os dados da Unidade Curricular',
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -33,7 +57,7 @@ class CadastroInstrutorPage extends StatelessWidget {
               TextFormField(
                 controller: _nomeController,
                 decoration: const InputDecoration(
-                  labelText: 'Nome Completo',
+                  labelText: 'Nome',
                   border: OutlineInputBorder(),
                 ),
                 validator: (value) {
@@ -45,22 +69,39 @@ class CadastroInstrutorPage extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               TextFormField(
-                controller: _emailController,
+                controller: _cargaHorariaController,
                 decoration: const InputDecoration(
-                  labelText: 'Email',
-                  border: OutlineInputBorder(),
-                ),
-              ),
-              const SizedBox(height: 20),
-              TextFormField(
-                controller: _telefoneController,
-                decoration: const InputDecoration(
-                  labelText: 'Telefone',
+                  labelText: 'Carga Horária',
                   border: OutlineInputBorder(),
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Por favor, insira o telefone';
+                    return 'Por favor, insira a carga horária';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 20),
+              DropdownButtonFormField<Cursos>(
+                value: cursoSelecionado,
+                items: cursos.map((curso) {
+                  return DropdownMenuItem<Cursos>(
+                    value: curso,
+                    child: Text(curso.nomeCurso),
+                  );
+                }).toList(),
+                onChanged: (value) {
+                  setState(() {
+                    cursoSelecionado = value;
+                  });
+                },
+                decoration: const InputDecoration(
+                  labelText: 'Curso',
+                  border: OutlineInputBorder(),
+                ),
+                validator: (value) {
+                  if (value == null) {
+                    return 'Por favor, selecione um curso';
                   }
                   return null;
                 },
@@ -69,7 +110,6 @@ class CadastroInstrutorPage extends StatelessWidget {
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState?.validate() ?? false) {
-                    // Aqui você pode salvar ou enviar os dados do instrutor
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text('Cadastro realizado com sucesso!')),
                     );
@@ -79,7 +119,7 @@ class CadastroInstrutorPage extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 40),
                   textStyle: const TextStyle(fontSize: 18),
                 ),
-                child: const Text('Cadastrar Instrutor'),
+                child: const Text('Cadastrar Unidade Curricular'),
               ),
             ],
           ),

@@ -1,4 +1,5 @@
 import 'package:cronograma/presentation/pages/Instrutores/instrutor_page_form.dart';
+import 'package:cronograma/presentation/pages/cursos/curso_page_form.dart';
 
 import 'package:flutter/material.dart';
 
@@ -33,7 +34,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home:  CadastroInstrutorPage(),
+      home:  const CursoPageForm(),
     );
   }
 }
