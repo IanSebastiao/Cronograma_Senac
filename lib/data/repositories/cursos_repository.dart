@@ -42,4 +42,18 @@ class CursosRepository {
       whereArgs: [id],
     );
   }
+  Future<int?> getCursoIdByNome(String nomeCurso) async {
+    final db = await DatabaseHelper.initDb();
+    final List<Map<String, Object?>> result = await db.query(
+      'Cursos',
+      where: 'nome_curso = ?',
+      whereArgs: [nomeCurso],
+    );
+    
+    if (result.isNotEmpty) {
+      return result.first['idCursos'] as int?;
+    }
+    
+    return null;  // Caso não encontre o curso com o nome fornecido.
+  }
 }

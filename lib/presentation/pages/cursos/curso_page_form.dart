@@ -30,7 +30,7 @@ class _CursoPageFormState extends State<CursoPageForm> {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Curso adicionado com sucesso!')),
         );
-        Navigator.pop(context); // Fecha a página após salvar
+        // Navigator.pop(context); // Fecha a página após salvar
       }
     }
   }

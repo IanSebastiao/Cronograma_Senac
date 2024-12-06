@@ -1,6 +1,9 @@
 import 'package:cronograma/data/models/cursos_model.dart';
+import 'package:cronograma/data/models/unidades_curriculares_model.dart';
 import 'package:cronograma/data/repositories/cursos_repository.dart';
+import 'package:cronograma/data/repositories/unidades_curriculares_repository.dart';
 import 'package:cronograma/presentation/viewmodels/cursos_viewmodels.dart';
+import 'package:cronograma/presentation/viewmodels/unidades_curriculares_viewmodels.dart';
 import 'package:flutter/material.dart';
 
 class CadastroUnidadesCurricularesPage extends StatefulWidget {
@@ -15,7 +18,8 @@ class _CadastroUnidadesCurricularesPageState extends State<CadastroUnidadesCurri
   final TextEditingController _nomeController = TextEditingController();
   final TextEditingController _cargaHorariaController = TextEditingController();
 
-  CursosViewModel cursosViewModel = CursosViewModel(CursosRepository());
+  final CursosViewModel cursosviewModel = CursosViewModel(CursosRepository());
+  final UnidadesCurricularesViewModel _viewModel = UnidadesCurricularesViewModel(UnidadesCurricularesRepository());
   List<Cursos> cursos = [];
   Cursos? cursoSelecionado;
 
@@ -26,10 +30,31 @@ class _CadastroUnidadesCurricularesPageState extends State<CadastroUnidadesCurri
   }
 
   Future<void> _carregarCursos() async {
-    List<Cursos> listaCursos = await cursosViewModel.getCursos();
+    List<Cursos> listaCursos = await cursosviewModel.getCursos();
     setState(() {
       cursos = listaCursos;
     });
+  }
+  Future<void> saveUnidadeCurricular() async {
+    if (_formKey.currentState!.validate()) {
+       int? idCurso = await cursosviewModel.getCursoIdByNome(cursoSelecionado!.nomeCurso);
+      final uc = UnidadesCurriculares(
+        nomeUc: _nomeController.text,
+        cargahoraria: int.parse(_cargaHorariaController.text),
+        idcurso: idCurso!
+        
+      );
+      // print(dog.toMap());
+      await _viewModel.addUnidadeCurricular(uc);
+
+      // Verifica se o widget ainda está montado antes de exibir o Snackbar ou navegar
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Curso adicionado com sucesso!')),
+        );
+        // Navigator.pop(context); // Fecha a página após salvar
+      }
+    }
   }
 
   @override
@@ -108,13 +133,7 @@ class _CadastroUnidadesCurricularesPageState extends State<CadastroUnidadesCurri
               ),
               const SizedBox(height: 30),
               ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState?.validate() ?? false) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Cadastro realizado com sucesso!')),
-                    );
-                  }
-                },
+                onPressed: saveUnidadeCurricular,
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 40),
                   textStyle: const TextStyle(fontSize: 18),

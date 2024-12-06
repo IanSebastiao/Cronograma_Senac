@@ -1,6 +1,8 @@
 import 'dart:io';
 
+import 'package:cronograma/data/models/unidades_curriculares_model.dart';
 import 'package:cronograma/presentation/pages/Instrutores/instrutor_page_form.dart';
+import 'package:cronograma/presentation/pages/Unidades%20Curriculares/unidades_curriculares_form.dart';
 import 'package:cronograma/presentation/pages/cursos/curso_page_form.dart';
 
 import 'package:flutter/material.dart';
@@ -43,7 +45,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home:  const CursoPageForm(),
+      home: const CadastroUnidadesCurricularesPage(),
     );
   }
 }
