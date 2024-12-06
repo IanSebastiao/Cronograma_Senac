@@ -1,9 +1,18 @@
+import 'dart:io';
+
 import 'package:cronograma/presentation/pages/Instrutores/instrutor_page_form.dart';
 import 'package:cronograma/presentation/pages/cursos/curso_page_form.dart';
 
 import 'package:flutter/material.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 void main() {
+  // Verifique se está em um ambiente desktop (Windows, Linux, macOS)
+  if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
+    // Inicializa o factory do banco de dados para uso com sqflite_common_ffi
+    sqfliteFfiInit();
+    databaseFactory = databaseFactoryFfi;
+  }
   runApp(const MyApp());
 }
 
