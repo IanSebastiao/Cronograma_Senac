@@ -19,7 +19,7 @@ class InstrutoresRepository {
     return instrutorMaps.map((map) {
       return Instrutores(
         idInstrutores: map['idInstrutores'] as int?,
-        nomeInstrutor: map['nome_instrutor'] as String, nome: '',
+        nomeInstrutor: map['nome_instrutor'] as String,
       );
     }).toList();
   }

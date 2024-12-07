@@ -21,4 +21,8 @@ class CursosViewModel {
   Future<void> deleteCurso(int id) async {
     await repository.deleteCurso(id);
   }
+   // Novo método para buscar o id do curso pelo nome
+  Future<int?> getCursoIdByNome(String nomeCurso) async {
+    return await repository.getCursoIdByNome(nomeCurso);
+  }
 }

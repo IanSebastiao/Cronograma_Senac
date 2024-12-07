@@ -1,8 +1,21 @@
+import 'dart:io';
+
+import 'package:cronograma/data/models/unidades_curriculares_model.dart';
 import 'package:cronograma/presentation/pages/Instrutores/instrutor_page_form.dart';
+import 'package:cronograma/presentation/pages/Unidades%20Curriculares/unidades_curriculares_form.dart';
+import 'package:cronograma/presentation/pages/cursos/curso_page_form.dart';
+import 'package:cronograma/presentation/pages/splash_screen.dart';
 
 import 'package:flutter/material.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 void main() {
+  // Verifique se está em um ambiente desktop (Windows, Linux, macOS)
+  if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
+    // Inicializa o factory do banco de dados para uso com sqflite_common_ffi
+    sqfliteFfiInit();
+    databaseFactory = databaseFactoryFfi;
+  }
   runApp(const MyApp());
 }
 
@@ -33,7 +46,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home:  CadastroInstrutorPage(),
+      home: const SplashScreen(),
     );
   }
 }
