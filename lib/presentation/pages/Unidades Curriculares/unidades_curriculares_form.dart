@@ -10,16 +10,19 @@ class CadastroUnidadesCurricularesPage extends StatefulWidget {
   const CadastroUnidadesCurricularesPage({super.key});
 
   @override
-  State<CadastroUnidadesCurricularesPage> createState() => _CadastroUnidadesCurricularesPageState();
+  State<CadastroUnidadesCurricularesPage> createState() =>
+      _CadastroUnidadesCurricularesPageState();
 }
 
-class _CadastroUnidadesCurricularesPageState extends State<CadastroUnidadesCurricularesPage> {
+class _CadastroUnidadesCurricularesPageState
+    extends State<CadastroUnidadesCurricularesPage> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nomeController = TextEditingController();
   final TextEditingController _cargaHorariaController = TextEditingController();
 
   final CursosViewModel cursosviewModel = CursosViewModel(CursosRepository());
-  final UnidadesCurricularesViewModel _viewModel = UnidadesCurricularesViewModel(UnidadesCurricularesRepository());
+  final UnidadesCurricularesViewModel _viewModel =
+      UnidadesCurricularesViewModel(UnidadesCurricularesRepository());
   List<Cursos> cursos = [];
   Cursos? cursoSelecionado;
 
@@ -35,15 +38,15 @@ class _CadastroUnidadesCurricularesPageState extends State<CadastroUnidadesCurri
       cursos = listaCursos;
     });
   }
+
   Future<void> saveUnidadeCurricular() async {
     if (_formKey.currentState!.validate()) {
-       int? idCurso = await cursosviewModel.getCursoIdByNome(cursoSelecionado!.nomeCurso);
+      int? idCurso =
+          await cursosviewModel.getCursoIdByNome(cursoSelecionado!.nomeCurso);
       final uc = UnidadesCurriculares(
-        nomeUc: _nomeController.text,
-        cargahoraria: int.parse(_cargaHorariaController.text),
-        idcurso: idCurso!
-        
-      );
+          nomeUc: _nomeController.text,
+          cargahoraria: int.parse(_cargaHorariaController.text),
+          idcurso: idCurso!);
       // print(dog.toMap());
       await _viewModel.addUnidadeCurricular(uc);
 
@@ -135,7 +138,8 @@ class _CadastroUnidadesCurricularesPageState extends State<CadastroUnidadesCurri
               ElevatedButton(
                 onPressed: saveUnidadeCurricular,
                 style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 40),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 15, horizontal: 40),
                   textStyle: const TextStyle(fontSize: 18),
                 ),
                 child: const Text('Cadastrar Unidade Curricular'),

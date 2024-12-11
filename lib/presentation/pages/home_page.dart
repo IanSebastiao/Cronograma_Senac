@@ -65,7 +65,8 @@ class _HomePageState extends State<HomePage> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const CursoPageForm()),
+                  MaterialPageRoute(
+                      builder: (context) => const CursoPageForm()),
                 );
               },
             ),
@@ -80,14 +81,15 @@ class _HomePageState extends State<HomePage> {
                         builder: (context) => const CadastroInstrutorPage()));
               },
             ),
-                        ListTile(
+            ListTile(
               leading: const Icon(Icons.book, color: Colors.teal),
               title: const Text('Unidades Curriculares'),
               onTap: () {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const CadastroUnidadesCurricularesPage()));
+                        builder: (context) =>
+                            const CadastroUnidadesCurricularesPage()));
               },
             ),
           ],

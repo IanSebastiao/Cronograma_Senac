@@ -21,4 +21,8 @@ class TurnoViewModel {
   Future<void> deleteTurno(int id) async {
     await repository.deleteTurno(id);
   }
+
+  Future<int?> getTurnoIdByNome(String nomeTurno) async {
+    return await repository.getTurnoIdByNome(nomeTurno);
+  }
 }

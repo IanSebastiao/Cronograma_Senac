@@ -6,7 +6,8 @@ class UnidadesCurricularesViewModel {
 
   UnidadesCurricularesViewModel(this.repository);
 
-  Future<void> addUnidadeCurricular(UnidadesCurriculares unidadeCurricular) async {
+  Future<void> addUnidadeCurricular(
+      UnidadesCurriculares unidadeCurricular) async {
     await repository.insertUnidadeCurricular(unidadeCurricular);
   }
 
@@ -14,7 +15,8 @@ class UnidadesCurricularesViewModel {
     return await repository.getUnidadesCurriculares();
   }
 
-  Future<void> updateUnidadeCurricular(UnidadesCurriculares unidadeCurricular) async {
+  Future<void> updateUnidadeCurricular(
+      UnidadesCurriculares unidadeCurricular) async {
     await repository.updateUnidadeCurricular(unidadeCurricular);
   }
 

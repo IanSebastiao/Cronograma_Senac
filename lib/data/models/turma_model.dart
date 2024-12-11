@@ -1,9 +1,9 @@
 class Turma {
   final int? idTurma;
   final String turma;
-  final int idcurso;
-  final int idturno;
-  final int idinstrutor;
+  final int? idcurso;
+  final int? idturno;
+  final int? idinstrutor;
 
   Turma({
     this.idTurma,

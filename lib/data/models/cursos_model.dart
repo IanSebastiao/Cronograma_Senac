@@ -1,4 +1,3 @@
-
 class Cursos {
   final int? idCursos;
   final String nomeCurso;

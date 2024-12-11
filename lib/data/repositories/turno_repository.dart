@@ -41,4 +41,19 @@ class TurnoRepository {
       whereArgs: [id],
     );
   }
+
+  Future<int?> getTurnoIdByNome(String nomeTurno) async {
+    final db = await DatabaseHelper.initDb();
+    final List<Map<String, Object?>> result = await db.query(
+      'Turno',
+      where: 'turno = ?',
+      whereArgs: [nomeTurno],
+    );
+
+    if (result.isNotEmpty) {
+      return result.first['idTurno'] as int?;
+    }
+
+    return null; // Caso não encontre o curso com o nome fornecido.
+  }
 }

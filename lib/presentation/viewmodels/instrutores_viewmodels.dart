@@ -21,4 +21,8 @@ class InstrutoresViewModel {
   Future<void> deleteInstrutor(int? id) async {
     await repository.deleteInstrutor(id!);
   }
+
+  Future<int?> getInstrutorIdByNome(String nomeInstrutor) async {
+    return await repository.getInstrutoroIdByNome(nomeInstrutor);
+  }
 }
